@@ -1,0 +1,28 @@
+/**
+ * API Base URL resolver for mobile vs web builds.
+ * 
+ * In mobile (Capacitor) builds, the app runs from local static files,
+ * so API calls must go to the remote Vercel backend.
+ * In web builds, relative URLs work fine since Next.js serves both.
+ */
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+
+/**
+ * Returns the full URL for an API endpoint.
+ * - Mobile build: https://bibleforlifestages.com/api/today-verse
+ * - Web build: /api/today-verse
+ */
+export function apiUrl(path: string): string {
+  // Ensure path starts with /
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`
+  return `${API_BASE_URL}${normalizedPath}`
+}
+
+/**
+ * Fetch wrapper that automatically resolves API URLs.
+ * Drop-in replacement for fetch() for API calls.
+ */
+export async function apiFetch(path: string, init?: RequestInit): Promise<Response> {
+  return fetch(apiUrl(path), init)
+}

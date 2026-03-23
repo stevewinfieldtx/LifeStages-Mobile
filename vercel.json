@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/sync-website-kb",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/send-votd",
+      "schedule": "0 11 * * *"
+    }
+  ]
+}

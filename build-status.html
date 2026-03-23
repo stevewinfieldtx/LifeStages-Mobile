@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LifeStages Mobile — Build Status</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080e1a;--card:#111a2e;--border:#1d2d4a;--amber:#f59e0b;--green:#10b981;--violet:#8b5cf6;--text:#e2e8f0;--muted:#64748b}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem}
+.container{max-width:640px;margin:0 auto}
+h1{font-family:'Playfair Display',serif;font-size:1.8rem;text-align:center;background:linear-gradient(135deg,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.subtitle{text-align:center;color:var(--muted);font-size:.85rem;margin-bottom:2rem}
+
+.status-grid{display:grid;gap:.75rem;margin-bottom:2rem}
+.status-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:.75rem}
+.status-icon{flex-shrink:0;font-size:1.2rem}
+.done{color:var(--green)}
+.pending{color:var(--amber)}
+.status-text{flex:1}
+.status-text strong{display:block;font-size:.85rem}
+.status-text span{font-size:.75rem;color:var(--muted)}
+.badge-done{font-size:.6rem;padding:.15rem .5rem;border-radius:99px;background:rgba(16,185,129,.15);color:#34d399;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.badge-pending{font-size:.6rem;padding:.15rem .5rem;border-radius:99px;background:rgba(245,158,11,.15);color:#fbbf24;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+
+.section-title{font-size:1rem;font-weight:700;margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:.5rem;color:var(--amber)}
+
+.next-steps{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(139,92,246,.08));border:1px solid rgba(245,158,11,.2);border-radius:1rem;padding:1.25rem;margin-top:1.5rem}
+.next-steps h2{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:.75rem;color:white}
+.step{display:flex;gap:.75rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.step:last-child{border-bottom:none}
+.step-num{width:1.5rem;height:1.5rem;border-radius:.375rem;background:var(--amber);color:black;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+.step-text{font-size:.8rem;line-height:1.5;color:var(--text)}
+.step-text em{color:var(--muted);font-style:normal}
+
+.note{margin-top:1.5rem;padding:1rem;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.2);border-radius:.75rem;font-size:.8rem;line-height:1.5}
+.note strong{color:#a78bfa}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>LifeStages Mobile</h1>
+<p class="subtitle">App Store Build — Progress Tracker</p>
+
+<div class="section-title"><span class="material-symbols-outlined">verified</span> Completed (Code)</div>
+<div class="status-grid">
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Local bundling config</strong><span>next.config.mjs — static export for mobile builds, no remote URL</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>API routing for static export</strong><span>All 25+ fetch() calls route through apiUrl() → Vercel backend</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Capacitor config (proper)</strong><span>webDir: 'out', no server.url, splash screen, status bar, haptics</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Mobile Home Screen</strong><span>Logo, Bible quick-read, profile CTA, VOTD image, verse, breakdown, "Go Deeper" CTA</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Native bottom tab bar</strong><span>Home, Bible, Deeper (accent), Premium, Profile — with haptic feedback</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Native features bridge</strong><span>Haptics, push notifications, share sheet, status bar, splash, offline cache, network detection</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Offline support</strong><span>Caches last verse + interpretation, shows offline banner, graceful degradation</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Push notification setup</strong><span>Requests permission on first launch (5s delay), registers device token</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Deep engagement pages</strong><span>All 9 content pages ported: verse, context, stories, poetry, imagery, songs, lifelines, deep-dive, talk</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Supporting pages</strong><span>Profile, subscription, Bible reader, sermon, church, privacy, terms, support, i18n</span></div><span class="badge-done">done</span></div>
+  <div class="status-item"><span class="material-symbols-outlined done">check_circle</span><div class="status-text"><strong>Safe area handling</strong><span>env(safe-area-inset-*) for notch, Dynamic Island, home indicator</span></div><span class="badge-done">done</span></div>
+</div>
+
+<div class="section-title"><span class="material-symbols-outlined" style="color:var(--amber)">construction</span> What You Do Next (on Mac)</div>
+<div class="status-grid">
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>npm install</strong><span>Install all dependencies</span></div><span class="badge-pending">you</span></div>
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>Static build</strong><span>BUILD_TARGET=mobile npm run build</span></div><span class="badge-pending">you</span></div>
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>Add iOS platform</strong><span>npx cap add ios && npx cap sync</span></div><span class="badge-pending">you</span></div>
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>Xcode signing</strong><span>Open Xcode, set Team and Bundle ID (com.lifestagesai.bible)</span></div><span class="badge-pending">you</span></div>
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>Test on device</strong><span>Run on iPhone simulator or real device</span></div><span class="badge-pending">you</span></div>
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>App icons + screenshots</strong><span>Generate app icons (1024x1024) and App Store screenshots</span></div><span class="badge-pending">you + me</span></div>
+  <div class="status-item"><span class="material-symbols-outlined pending">pending</span><div class="status-text"><strong>Archive + submit</strong><span>Xcode → Product → Archive → Distribute to App Store</span></div><span class="badge-pending">you</span></div>
+</div>
+
+<div class="next-steps">
+  <h2>🍎 Mac Steps (Copy the LifeStages-Mobile folder to your Mac)</h2>
+  <div class="step"><div class="step-num">1</div><div class="step-text">Copy the <strong>LifeStages-Mobile</strong> folder to your Mac via USB drive, AirDrop, or Git<br><em>The entire project needs to be on the Mac for Xcode builds</em></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-text">Open Terminal, <code>cd</code> into the folder, run <strong>npm install</strong><br><em>This installs all dependencies including Capacitor plugins</em></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-text">Run <strong>BUILD_TARGET=mobile npm run build</strong><br><em>This creates the static bundle in the 'out' folder</em></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-text">Run <strong>npx cap add ios</strong> then <strong>npx cap sync</strong><br><em>Creates the native iOS project and copies your build into it</em></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-text">Run <strong>npx cap open ios</strong> to open in Xcode<br><em>Select your Apple Developer Team, set bundle ID, then Cmd+R to run</em></div></div>
+  <div class="step"><div class="step-num">6</div><div class="step-text">When ready: <strong>Product → Archive → Distribute App</strong><br><em>Upload to App Store Connect for review</em></div></div>
+</div>
+
+<div class="note">
+  <strong>💡 Important:</strong> You need an Apple Developer account ($99/year) to submit to the App Store. Sign up at developer.apple.com/programs if you haven't already. You also need Xcode 15+ installed from the Mac App Store.
+</div>
+
+</div>
+</body>
+</html>
