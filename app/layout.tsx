@@ -6,6 +6,7 @@ import { DevotionalProvider } from "@/context/devotional-context"
 import { SubscriptionProvider } from "@/context/subscription-context"
 import { LanguageProvider } from "@/context/language-context"
 import { ChurchProvider } from "@/context/church-context"
+import EmailGate from "@/components/email-gate"
 import "./globals.css"
 
 const _libreBaskerville = Libre_Baskerville({
@@ -58,7 +59,9 @@ export default function RootLayout({
         <LanguageProvider>
           <SubscriptionProvider>
             <ChurchProvider>
-              <DevotionalProvider>{children}</DevotionalProvider>
+              <DevotionalProvider>
+                <EmailGate>{children}</EmailGate>
+              </DevotionalProvider>
             </ChurchProvider>
           </SubscriptionProvider>
         </LanguageProvider>

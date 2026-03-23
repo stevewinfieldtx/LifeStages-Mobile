@@ -448,6 +448,17 @@ export default function ProfilePage() {
             <span className="text-sm font-medium text-red-600">Logout & Clear Data</span>
           </button>
         </div>
+
+        {/* Delete Account */}
+        <div className="pt-2 pb-4">
+          <button
+            onClick={() => router.push("/account/delete")}
+            className="flex w-full items-center justify-center gap-2 p-3 rounded-xl hover:bg-red-600/10 transition-colors"
+          >
+            <span className="material-symbols-outlined text-red-400/50 text-sm">delete_forever</span>
+            <span className="text-xs text-red-400/50">Delete Account</span>
+          </button>
+        </div>
       </div>
 
       {/* Sticky Footer Button */}
