@@ -28,6 +28,10 @@ export default function SupportPage() {
       a: "Yes! Tap the profile icon on the home screen to update your age range, life situation, or content style at any time."
     },
     {
+      q: "How do I delete my account?",
+      a: "Go to Profile, scroll to the bottom, and tap 'Delete Account.' Confirm by entering your email address. This permanently removes all your data from our systems. If you have an active subscription, cancel it in your device settings first. You can also email support@bibleforlifestages.com to request deletion."
+    },
+    {
       q: "Is the AI content accurate?",
       a: "Our AI generates thoughtful devotional content, but it's meant to complement—not replace—traditional Bible study and guidance from pastors or counselors."
     },
@@ -75,20 +79,27 @@ export default function SupportPage() {
         </Card>
 
         {/* Quick Links */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-3 gap-3 mb-6">
           <button
             onClick={() => router.push("/privacy")}
-            className="flex items-center gap-3 p-4 bg-card rounded-xl border border-border hover:bg-muted transition-colors"
+            className="flex flex-col items-center gap-2 p-4 bg-card rounded-xl border border-border hover:bg-muted transition-colors"
           >
             <span className="material-symbols-outlined text-muted-foreground">shield</span>
-            <span className="text-sm font-medium">Privacy Policy</span>
+            <span className="text-xs font-medium">Privacy Policy</span>
           </button>
           <button
             onClick={() => router.push("/terms")}
-            className="flex items-center gap-3 p-4 bg-card rounded-xl border border-border hover:bg-muted transition-colors"
+            className="flex flex-col items-center gap-2 p-4 bg-card rounded-xl border border-border hover:bg-muted transition-colors"
           >
             <span className="material-symbols-outlined text-muted-foreground">description</span>
-            <span className="text-sm font-medium">Terms of Service</span>
+            <span className="text-xs font-medium">Terms of Service</span>
+          </button>
+          <button
+            onClick={() => router.push("/account/delete")}
+            className="flex flex-col items-center gap-2 p-4 bg-card rounded-xl border border-red-500/20 hover:bg-red-500/10 transition-colors"
+          >
+            <span className="material-symbols-outlined text-red-400/70">delete_forever</span>
+            <span className="text-xs font-medium text-red-400/70">Delete Account</span>
           </button>
         </div>
 

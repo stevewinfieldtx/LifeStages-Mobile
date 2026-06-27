@@ -22,9 +22,12 @@ export async function GET(request: Request) {
 
   try {
     // Call the push send endpoint internally
-    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000'
+    const railwayDomain = process.env.RAILWAY_PUBLIC_DOMAIN
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL
+    const baseUrl = appUrl
+      || (railwayDomain ? `https://${railwayDomain}` : null)
+      || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null)
+      || 'http://localhost:3000'
 
     const response = await fetch(`${baseUrl}/api/push/send-votd`, {
       method: 'POST',

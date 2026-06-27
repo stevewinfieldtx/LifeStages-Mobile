@@ -86,11 +86,36 @@ export default function PrivacyPage() {
           personal information from children under 13.
         </p>
 
+        <h2 className="text-lg font-bold mt-6 mb-3">Account Deletion</h2>
+        <p>
+          You can permanently delete your account and all associated data at any time.
+          To delete your account:
+        </p>
+        <ol className="list-decimal pl-5 space-y-1">
+          <li>Open the app and go to <strong>Profile</strong></li>
+          <li>Scroll to the bottom and tap <strong>Delete Account</strong></li>
+          <li>Confirm by entering your email address</li>
+        </ol>
+        <p>
+          This will permanently remove your email, profile data, push notification registration,
+          verse history, and all personalization preferences from our systems. This action cannot be undone.
+        </p>
+        <p>
+          If you have an active subscription, please cancel it through your device&apos;s subscription
+          settings before deleting your account. Account deletion does not automatically cancel
+          your subscription.
+        </p>
+        <p>
+          You may also request account deletion by emailing{" "}
+          <a href="mailto:support@bibleforlifestages.com" className="text-primary">support@bibleforlifestages.com</a>.
+        </p>
+
         <h2 className="text-lg font-bold mt-6 mb-3">Your Rights</h2>
         <p>You can:</p>
         <ul className="list-disc pl-5 space-y-1">
+          <li>Delete your account and all data from within the app (Profile → Delete Account)</li>
           <li>Clear your local data at any time through your device settings</li>
-          <li>Delete your profile from within the app</li>
+          <li>Request data deletion by email</li>
           <li>Contact us with questions about your data</li>
         </ul>
 

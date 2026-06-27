@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/server'
+import { sendVOTDEmail } from '@/lib/email'
 
 // Send daily Verse of the Day push notification to all registered devices
 // Called by cron job or scheduled task
@@ -54,11 +55,26 @@ export async function POST(request: NextRequest) {
       results.errors += fcmResult.errors
     }
 
+    // Send email to users with addresses on file
+    const { data: emailRows } = await supabaseAdmin
+      .from('push_tokens')
+      .select('email')
+      .not('email', 'is', null)
+
+    const emails = [...new Set(
+      (emailRows ?? []).map(r => r.email).filter(Boolean) as string[]
+    )]
+
+    const emailResults = emails.length > 0
+      ? await sendVOTDEmail(emails, verse.verse_reference, verse.verse_text)
+      : { sent: 0, errors: 0 }
+
     return NextResponse.json({
       success: true,
       verse: verse.verse_reference,
       date: today,
-      ...results,
+      push: results,
+      email: emailResults,
     })
   } catch (error) {
     console.error('[Push VOTD] Error:', error)
