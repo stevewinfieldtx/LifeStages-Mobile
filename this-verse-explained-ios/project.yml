@@ -25,6 +25,7 @@ targets:
         UILaunchScreen: {}
         ITSAppUsesNonExemptEncryption: false
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
     dependencies:
       - target: VerseShare
         embed: true
