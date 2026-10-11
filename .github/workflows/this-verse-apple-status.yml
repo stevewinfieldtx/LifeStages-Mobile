@@ -26,4 +26,6 @@ jobs:
           const body = await response.json();
           if(!response.ok) { console.log(JSON.stringify({status:response.status,errors:body.errors})); process.exit(1); }
           console.log(JSON.stringify({builds:body.data.map(x=>({id:x.id,...x.attributes})),included:body.included?.map(x=>({type:x.type,id:x.id,...x.attributes}))},null,2));
+          const uploads = await fetch('https://api.appstoreconnect.apple.com/v1/apps/6821500108/buildUploads?limit=10',{headers:{Authorization:`Bearer ${input}.${signature}`}});
+          console.log('UPLOAD_STATUS',JSON.stringify(await uploads.json(),null,2));
           JS
