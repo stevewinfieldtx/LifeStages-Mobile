@@ -1,0 +1,11 @@
+.build/
+build/
+*.xcodeproj/
+*.xcworkspace/
+App/Info.plist
+Share/Info.plist
+*.zip
+build.log
+.DS_Store
+*.p12
+*.mobileprovision

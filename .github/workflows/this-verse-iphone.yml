@@ -1,0 +1,75 @@
+name: This Verse Explained signed iPhone build
+on:
+  push:
+    branches: [codex/this-verse-sharing]
+    paths: ['this-verse-explained-ios/**', '.github/workflows/this-verse-iphone.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release:
+    runs-on: macos-26
+    environment: apple-release
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: this-verse-explained-ios
+    env:
+      APPLE_TEAM_ID: LLWKD27S4H
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify existing Apple release configuration
+        run: |
+          test -n "$ASC_KEY_ID" && test -n "$ASC_ISSUER_ID"
+          xcodebuild -version
+      - name: Test and generate separate native app
+        run: |
+          swift test
+          brew install xcodegen
+          xcodegen generate
+      - name: Prepare existing Apple authentication
+        env:
+          ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+        run: |
+          test -n "$ASC_PRIVATE_KEY" || { echo 'Existing Apple authentication is unavailable'; exit 1; }
+          umask 077
+          printf '%s' "$ASC_PRIVATE_KEY" > "$RUNNER_TEMP/ThisVerseAuthKey.p8"
+      - name: Archive companion app and Share extension
+        run: |
+          xcodebuild -project ThisVerseExplained.xcodeproj -scheme ThisVerseExplained -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath build/ThisVerseExplained.xcarchive \
+            -allowProvisioningUpdates -authenticationKeyPath "$RUNNER_TEMP/ThisVerseAuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Automatic CODE_SIGNING_ALLOWED=NO \
+            CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" MARKETING_VERSION=1.0 archive > archive.log 2>&1 || { tail -100 archive.log; exit 1; }
+      - name: Export signed archive without uploading
+        run: |
+          python3 - <<'PY'
+          import os, plistlib
+          options = {'method':'app-store-connect', 'destination':'export', 'teamID':os.environ['APPLE_TEAM_ID'], 'signingStyle':'automatic', 'manageAppVersionAndBuildNumber':False, 'uploadSymbols':True}
+          with open('build/ExportOptions.plist','wb') as f: plistlib.dump(options,f)
+          PY
+          xcodebuild -exportArchive -archivePath build/ThisVerseExplained.xcarchive \
+            -exportOptionsPlist build/ExportOptions.plist -exportPath build/export \
+            -allowProvisioningUpdates -authenticationKeyPath "$RUNNER_TEMP/ThisVerseAuthKey.p8" \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" > export.log 2>&1 || { tail -100 export.log; exit 1; }
+          test -n "$(find build/export -name '*.ipa' -print -quit)"
+      - name: Save separate signed iPhone app
+        uses: actions/upload-artifact@v4
+        with:
+          name: ThisVerseExplained-signed-iPhone
+          path: this-verse-explained-ios/build/export/**
+          retention-days: 7
+      - name: Save native build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ThisVerseExplained-release-diagnostics
+          path: |
+            this-verse-explained-ios/archive.log
+            this-verse-explained-ios/export.log
+      - name: Remove temporary authentication file
+        if: always()
+        run: rm -f "$RUNNER_TEMP/ThisVerseAuthKey.p8"

@@ -1,0 +1,68 @@
+name: ThisVerseExplained
+options:
+  deploymentTarget:
+    iOS: '16.0'
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    TARGETED_DEVICE_FAMILY: '1,2'
+    MARKETING_VERSION: '1.0.0'
+    CURRENT_PROJECT_VERSION: '1'
+    CODE_SIGN_STYLE: Automatic
+targets:
+  ThisVerseExplained:
+    type: application
+    platform: iOS
+    sources: [App, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wintechpartners.thisverseexplained
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: This Verse Explained
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+    dependencies:
+      - target: VerseShare
+        embed: true
+  VerseShare:
+    type: app-extension
+    platform: iOS
+    sources: [Share, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wintechpartners.thisverseexplained.share
+        APPLICATION_EXTENSION_API_ONLY: YES
+        SKIP_INSTALL: YES
+    info:
+      path: Share/Info.plist
+      properties:
+        CFBundleDisplayName: This Verse Explained
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionJavaScriptPreprocessingFile: Selection
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsText: true
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsWebPageWithMaxCount: 1
+  ShareFlowTests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: UITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.wintechpartners.thisverseexplained.uitests
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+      - target: ThisVerseExplained
+schemes:
+  ThisVerseExplained:
+    build:
+      targets:
+        ThisVerseExplained: all
+    test:
+      targets: [ShareFlowTests]
