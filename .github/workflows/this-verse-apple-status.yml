@@ -1,0 +1,29 @@
+name: This Verse Explained Apple processing status
+on:
+  push:
+    branches: [codex/this-verse-sharing]
+    paths: ['.github/workflows/this-verse-apple-status.yml']
+permissions:
+  contents: read
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    environment: apple-release
+    steps:
+      - name: Read this app's Apple build status
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.ASC_PRIVATE_KEY }}
+        run: |
+          node --input-type=module <<'JS'
+          import crypto from 'node:crypto';
+          const enc = x => Buffer.from(JSON.stringify(x)).toString('base64url');
+          const now = Math.floor(Date.now()/1000);
+          const input = `${enc({alg:'ES256',kid:process.env.ASC_KEY_ID,typ:'JWT'})}.${enc({iss:process.env.ASC_ISSUER_ID,iat:now,exp:now+600,aud:'appstoreconnect-v1'})}`;
+          const signature = crypto.sign('sha256',Buffer.from(input),{key:process.env.ASC_PRIVATE_KEY,dsaEncoding:'ieee-p1363'}).toString('base64url');
+          const response = await fetch('https://api.appstoreconnect.apple.com/v1/builds?filter[app]=6821500108&limit=10&include=buildBetaDetail,preReleaseVersion',{headers:{Authorization:`Bearer ${input}.${signature}`}});
+          const body = await response.json();
+          if(!response.ok) { console.log(JSON.stringify({status:response.status,errors:body.errors})); process.exit(1); }
+          console.log(JSON.stringify({builds:body.data.map(x=>({id:x.id,...x.attributes})),included:body.included?.map(x=>({type:x.type,id:x.id,...x.attributes}))},null,2));
+          JS
