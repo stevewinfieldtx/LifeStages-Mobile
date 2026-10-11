@@ -21,6 +21,8 @@ final class ShareFlowTests: XCTestCase {
         XCTAssertTrue(field.waitForExistence(timeout: 10), "Share extension must open its reference confirmation UI")
         XCTAssertEqual(field.value as? String, "John 3:16")
         XCTAssertTrue(app.buttons["Get the context"].exists)
+        app.buttons["Get the context"].tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "subscribe or restore your purchase first")).firstMatch.waitForExistence(timeout: 5))
         let screenshot = XCTAttachment(screenshot: app.screenshot())
         screenshot.name = "Shared John 3-16 in This Verse Explained"
         screenshot.lifetime = .keepAlways

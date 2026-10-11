@@ -71,6 +71,10 @@ final class ShareViewController: UIViewController {
     }
     @objc private func editChanged() { message.text = "Include the book name, chapter, and verse." }
     @objc private func openContext() {
+        guard SubscriptionAccess.active() else {
+            message.text = "Open This Verse Explained and subscribe or restore your purchase first. Bible for Life Stages subscriptions do not include this app. Then return to Chrome and share the verse again."
+            return
+        }
         let references = VerseReference.extract(field.text ?? "")
         guard references.count == 1, let url = VerseReference.contextURL(references[0]) else {
             message.text = "Enter one valid reference, such as John 3:16. Passages can contain up to 15 verses."; return

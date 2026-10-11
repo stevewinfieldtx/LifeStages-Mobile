@@ -5,7 +5,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let window = UIWindow(frame: UIScreen.main.bounds)
-        let controller = ContextWebViewController(url: URL(string: VerseReference.origin)!)
+        let controller = SubscriptionViewController()
         controller.title = "This Verse Explained"
         let nav = UINavigationController(rootViewController: controller)
         nav.overrideUserInterfaceStyle = .dark
